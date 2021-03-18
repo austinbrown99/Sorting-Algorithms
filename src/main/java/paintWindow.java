@@ -1,7 +1,14 @@
-import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.ValueAxis;
+import org.jfree.chart.labels.StandardCategoryItemLabelGenerator;
+import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.StackedBarRenderer;
+import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import javax.swing.*;
@@ -19,7 +26,30 @@ public class paintWindow {
 
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        JFreeChart chart = ChartFactory.createBarChart("Student Grades", "Student Name", "Marks", dataset, PlotOrientation.VERTICAL, false, true, false);
+        CategoryAxis categoryAxis = new CategoryAxis("");
+        categoryAxis.setLowerMargin(.01);
+        categoryAxis.setCategoryMargin(.01);
+        categoryAxis.setUpperMargin(.01);
+        categoryAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_90);
+
+        ValueAxis valueAxis = new NumberAxis("");
+
+        StackedBarRenderer renderer = new StackedBarRenderer();
+        renderer.setBarPainter(new StandardBarPainter());
+        renderer.setDrawBarOutline(false);
+        renderer.setShadowVisible(false);
+        //Bar labels
+        renderer.setBaseItemLabelsVisible(false);
+        renderer.setBaseItemLabelGenerator(new StandardCategoryItemLabelGenerator());
+
+        CategoryPlot plot = new CategoryPlot(dataset,
+                categoryAxis,
+                valueAxis,
+                renderer);
+
+        plot.setOrientation(PlotOrientation.VERTICAL);
+
+        JFreeChart chart = new JFreeChart("", JFreeChart.DEFAULT_TITLE_FONT, plot, false);
 
         JFrame frame = new JFrame("Sorting Algorithm");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,10 +93,12 @@ public class paintWindow {
         go.addActionListener(e -> {
             List<Integer> arr = new ArrayList<>();
 
+            //Adds random numbers to the array list
             for (int i = 0; i < Integer.parseInt(sizeOfSet.getText()) + 1; i++) {
                 arr.add(ThreadLocalRandom.current().nextInt(0, Integer.parseInt(rangeOfSet.getText())));
             }
 
+            //sorts the array list based on which algorithm they have chosen
             Object selectedItem = algorithmChoice.getSelectedItem();
             if ("Bubble".equals(selectedItem)) {
                 sortedArr.clear();
