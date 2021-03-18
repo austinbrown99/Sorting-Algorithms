@@ -85,11 +85,11 @@ public class paintWindow {
         String[] algorithmChoices = {"Bubble", "None"};
         JComboBox<String> algorithmChoice = new JComboBox<>(algorithmChoices);
         optionsPanel.add(algorithmChoice);
-        algorithmChoice.setBounds(200, 800, 100, 50);
+        algorithmChoice.setBounds(200, 790, 100, 50);
 
         JButton go = new JButton("Go!");
         optionsPanel.add(go);
-        go.setBounds(350, 800, 100, 50);
+        go.setBounds(350, 790, 100, 50);
         go.addActionListener(e -> {
             if (sizeOfSet.getText().equals("") || rangeOfSet.getText().equals("")) {
                 JOptionPane.showMessageDialog(null, "Please enter a size and a range for the set");
@@ -121,7 +121,7 @@ public class paintWindow {
 
         JButton close = new JButton("Close");
         optionsPanel.add(close);
-        close.setBounds(500, 800, 100, 50);
+        close.setBounds(500, 790, 100, 50);
         close.addActionListener(e -> frame.dispose());
 
         frame.pack();
