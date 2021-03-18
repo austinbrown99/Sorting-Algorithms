@@ -91,27 +91,31 @@ public class paintWindow {
         optionsPanel.add(go);
         go.setBounds(350, 800, 100, 50);
         go.addActionListener(e -> {
-            List<Integer> arr = new ArrayList<>();
+            if (sizeOfSet.getText().equals("") || rangeOfSet.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Please enter a size and a range for the set");
+            } else {
+                List<Integer> arr = new ArrayList<>();
 
-            //Adds random numbers to the array list
-            for (int i = 0; i < Integer.parseInt(sizeOfSet.getText()) + 1; i++) {
-                arr.add(ThreadLocalRandom.current().nextInt(0, Integer.parseInt(rangeOfSet.getText())));
-            }
+                //Adds random numbers to the array list
+                for (int i = 0; i < Integer.parseInt(sizeOfSet.getText()) + 1; i++) {
+                    arr.add(ThreadLocalRandom.current().nextInt(0, Integer.parseInt(rangeOfSet.getText())));
+                }
 
-            //sorts the array list based on which algorithm they have chosen
-            Object selectedItem = algorithmChoice.getSelectedItem();
-            if ("Bubble".equals(selectedItem)) {
-                sortedArr.clear();
-                sortedArr.addAll(Bubble.bubble(arr));
-            } else if ("None".equals(selectedItem)) {
-                sortedArr.clear();
-                sortedArr.addAll(arr);
-            }
+                //sorts the array list based on which algorithm they have chosen
+                Object selectedItem = algorithmChoice.getSelectedItem();
+                if ("Bubble".equals(selectedItem)) {
+                    sortedArr.clear();
+                    sortedArr.addAll(Bubble.bubble(arr));
+                } else if ("None".equals(selectedItem)) {
+                    sortedArr.clear();
+                    sortedArr.addAll(arr);
+                }
 
-            //Converts the array list to a dataset that is usable by the chart api
-            //dataset.setValue(data, y-axis group, x-axis group)
-            for (int i = 0; i < sortedArr.size(); i++) {
-                dataset.setValue(arr.get(i), String.valueOf(i), String.valueOf(i));
+                //Converts the array list to a dataset that is usable by the chart api
+                //dataset.setValue(data, y-axis group, x-axis group)
+                for (int i = 0; i < sortedArr.size(); i++) {
+                    dataset.setValue(arr.get(i), String.valueOf(i), String.valueOf(i));
+                }
             }
         });
 
