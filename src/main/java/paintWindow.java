@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class paintWindow {
     /**
@@ -41,7 +42,15 @@ public class paintWindow {
 
         JTextField sizeOfSet = new JTextField();
         optionsPanel.add(sizeOfSet);
-        sizeOfSet.setBounds(50, 800, 100, 50);
+        sizeOfSet.setBounds(50, 790, 100, 50);
+
+        JLabel rangeOfSetLabel = new JLabel("Range of Set");
+        optionsPanel.add(rangeOfSetLabel);
+        rangeOfSetLabel.setBounds(50, 860, rangeOfSetLabel.getPreferredSize().width, rangeOfSetLabel.getPreferredSize().height);
+
+        JTextField rangeOfSet = new JTextField();
+        optionsPanel.add(rangeOfSet);
+        rangeOfSet.setBounds(50, 875, 100, 50);
 
         String[] algorithmChoices = {"Bubble", "None"};
         JComboBox<String> algorithmChoice = new JComboBox<>(algorithmChoices);
@@ -52,12 +61,16 @@ public class paintWindow {
         optionsPanel.add(go);
         go.setBounds(350, 800, 100, 50);
         go.addActionListener(e -> {
-            List<Integer> arr = Main.createArray(Integer.parseInt(sizeOfSet.getText()));
+            List<Integer> arr = new ArrayList<>();
+
+            for (int i = 0; i < Integer.parseInt(sizeOfSet.getText()) + 1; i++) {
+                arr.add(ThreadLocalRandom.current().nextInt(0, Integer.parseInt(rangeOfSet.getText())));
+            }
 
             Object selectedItem = algorithmChoice.getSelectedItem();
             if ("Bubble".equals(selectedItem)) {
                 sortedArr.clear();
-                sortedArr.addAll(Bubble.bubble(arr));;
+                sortedArr.addAll(Bubble.bubble(arr));
             } else if ("None".equals(selectedItem)) {
                 sortedArr.clear();
                 sortedArr.addAll(arr);
@@ -65,7 +78,7 @@ public class paintWindow {
 
             //Converts the array list to a dataset that is usable by the chart api
             //dataset.setValue(data, y-axis group, x-axis group)
-            for (int i = 0; i < arr.size(); i++) {
+            for (int i = 0; i < sortedArr.size(); i++) {
                 dataset.setValue(arr.get(i), String.valueOf(i), String.valueOf(i));
             }
         });
