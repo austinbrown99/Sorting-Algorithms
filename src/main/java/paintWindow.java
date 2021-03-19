@@ -31,6 +31,8 @@ public class paintWindow {
         categoryAxis.setCategoryMargin(.01);
         categoryAxis.setUpperMargin(.01);
         categoryAxis.setCategoryLabelPositions(CategoryLabelPositions.UP_90);
+        categoryAxis.setTickLabelsVisible(false);
+        categoryAxis.setTickMarksVisible(false);
 
         ValueAxis valueAxis = new NumberAxis("");
 
@@ -82,6 +84,14 @@ public class paintWindow {
         optionsPanel.add(rangeOfSet);
         rangeOfSet.setBounds(50, 875, 100, 50);
 
+        JLabel timeTakenLabel = new JLabel("Time taken: ");
+        optionsPanel.add(timeTakenLabel);
+        timeTakenLabel.setBounds(200, 890, timeTakenLabel.getPreferredSize().width, timeTakenLabel.getPreferredSize().height);
+
+        JLabel timeTaken = new JLabel("");
+        optionsPanel.add(timeTaken);
+        timeTaken.setBounds(275, 890, 100, timeTakenLabel.getPreferredSize().height);
+
         String[] algorithmChoices = {"Bubble", "Selection", "None"};
         JComboBox<String> algorithmChoice = new JComboBox<>(algorithmChoices);
         optionsPanel.add(algorithmChoice);
@@ -103,6 +113,7 @@ public class paintWindow {
 
                 //sorts the array list based on which algorithm they have chosen
                 Object selectedItem = algorithmChoice.getSelectedItem();
+                long startTime = System.currentTimeMillis();
                 if ("Bubble".equals(selectedItem)) {
                     sortedArr.clear();
                     sortedArr.addAll(Bubble.bubble(arr));
@@ -114,6 +125,9 @@ public class paintWindow {
                     sortedArr.clear();
                     sortedArr.addAll(arr);
                 }
+                long endTime = System.currentTimeMillis();
+
+                timeTaken.setText(endTime - startTime + " ms");
 
                 //Converts the array list to a dataset that is usable by the chart api
                 //dataset.setValue(data, y-axis group, x-axis group)
