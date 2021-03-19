@@ -82,7 +82,7 @@ public class paintWindow {
         optionsPanel.add(rangeOfSet);
         rangeOfSet.setBounds(50, 875, 100, 50);
 
-        String[] algorithmChoices = {"Bubble", "None"};
+        String[] algorithmChoices = {"Bubble", "Selection", "None"};
         JComboBox<String> algorithmChoice = new JComboBox<>(algorithmChoices);
         optionsPanel.add(algorithmChoice);
         algorithmChoice.setBounds(200, 790, 100, 50);
@@ -106,6 +106,10 @@ public class paintWindow {
                 if ("Bubble".equals(selectedItem)) {
                     sortedArr.clear();
                     sortedArr.addAll(Bubble.bubble(arr));
+                }
+                if ("Selection".equals(selectedItem)) {
+                    sortedArr.clear();
+                    sortedArr.addAll(Selection.selection(arr));
                 } else if ("None".equals(selectedItem)) {
                     sortedArr.clear();
                     sortedArr.addAll(arr);
@@ -114,7 +118,7 @@ public class paintWindow {
                 //Converts the array list to a dataset that is usable by the chart api
                 //dataset.setValue(data, y-axis group, x-axis group)
                 for (int i = 0; i < sortedArr.size(); i++) {
-                    dataset.setValue(arr.get(i), String.valueOf(i), String.valueOf(i));
+                    dataset.setValue(sortedArr.get(i), String.valueOf(i), String.valueOf(i));
                 }
             }
         });
